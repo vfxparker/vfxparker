@@ -447,11 +447,19 @@
       color: #bbb;
     }
 
+    /* ── Testimonials see-more (mobile only) ── */
+    .testi-see-more-wrap { display: none; }
+
     /* ── Mobile ── */
     @media (max-width: 640px) {
+      .navbar { display: none; }
+      .page-wrapper { padding-top: 28px; }
       .projects-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr 1fr; }
       .social-boxes { gap: 8px; }
+      .testi-extra { display: none; }
+      .testi-extra.shown { display: flex; }
+      .testi-see-more-wrap { display: block; }
     }
 
     @media (max-width: 420px) {
@@ -667,7 +675,7 @@
         <p class="testi-quote">"I finally watched the whole video and bro its actually super good. I think its exactly what i wanted it to look like!!!"</p>
       </div>
 
-      <div class="testi-card">
+      <div class="testi-card testi-extra">
         <div class="testi-header">
           <div class="testi-author">
             <img class="testi-avatar" src="julien-azelart.jpg" alt="Julien Azelart" />
@@ -684,7 +692,7 @@
         <p class="testi-quote">"The animations are really good, pacing is perfect. its amazing!"</p>
       </div>
 
-      <div class="testi-card">
+      <div class="testi-card testi-extra">
         <div class="testi-header">
           <div class="testi-author">
             <img class="testi-avatar" src="supefron.jpg" alt="SupEfron" />
@@ -701,7 +709,7 @@
         <p class="testi-quote">"Just had a look! It's perfect bro!"</p>
       </div>
 
-      <div class="testi-card">
+      <div class="testi-card testi-extra">
         <div class="testi-header">
           <div class="testi-author">
             <img class="testi-avatar" src="crispydan.jpg" alt="CrispyDan" />
@@ -718,7 +726,7 @@
         <p class="testi-quote">"He gets videos done quick, great effects, and very communicative."</p>
       </div>
 
-      <div class="testi-card">
+      <div class="testi-card testi-extra">
         <div class="testi-header">
           <div class="testi-author">
             <img class="testi-avatar" src="systemzee-reacts.jpg" alt="Systemzee Reacts" />
@@ -735,7 +743,7 @@
         <p class="testi-quote">"Awesome! Really happy with how this one came together."</p>
       </div>
 
-      <div class="testi-card">
+      <div class="testi-card testi-extra">
         <div class="testi-header">
           <div class="testi-author">
             <img class="testi-avatar" src="abbas.jpg" alt="Abbas Rizvi" />
@@ -752,6 +760,13 @@
         <p class="testi-quote">"AMAZING EDITOR AND NAILED EVERY ANIMATION"</p>
       </div>
 
+    </div>
+
+    <div class="testi-see-more-wrap see-more-wrap">
+      <button class="see-more-btn" onclick="toggleMoreTestimonials(this)" aria-expanded="false">
+        <span>See more</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
     </div>
 
     <!-- Contact -->
@@ -784,6 +799,41 @@
   </div>
 
   <script>
+    function toggleMoreTestimonials(btn) {
+      var expanded = btn.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', expanded);
+      btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
+      var cards = document.querySelectorAll('.testi-extra');
+
+      if (expanded) {
+        cards.forEach(function(c, i) {
+          c.style.display = 'flex';
+          c.style.opacity = '0';
+          c.style.transform = 'translateY(10px)';
+          setTimeout(function() {
+            c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
+            c.style.opacity = '1';
+            c.style.transform = 'translateY(0)';
+            setTimeout(function() {
+              c.style.transition = '';
+              c.style.opacity = '';
+              c.style.transform = '';
+            }, 420);
+          }, 20 + i * 70);
+        });
+      } else {
+        cards.forEach(function(c) {
+          c.style.transition = 'opacity 0.22s ease';
+          c.style.opacity = '0';
+          setTimeout(function() {
+            c.style.display = 'none';
+            c.style.transition = '';
+            c.style.opacity = '';
+          }, 240);
+        });
+      }
+    }
+
     function toggleMoreProjects(btn) {
       var expanded = btn.classList.toggle('expanded');
       btn.setAttribute('aria-expanded', expanded);
