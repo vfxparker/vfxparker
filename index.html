@@ -6,261 +6,189 @@
   <title>vfxparker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet" />
   <link rel="icon" href="Favicon black.png" media="(prefers-color-scheme: light)" />
   <link rel="icon" href="Favicon white.png" media="(prefers-color-scheme: dark)" />
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: auto; }
 
+    :root {
+      --bg:       #0A0A0A;
+      --fg:       #F5F5F7;
+      --accent:   #0071E3;
+      --surface:  #131313;
+      --surface2: #1c1c1e;
+      --border:   rgba(255,255,255,0.08);
+      --border2:  rgba(255,255,255,0.14);
+      --muted:    #888;
+    }
+
     body {
+      background: var(--bg);
+      color: var(--fg);
       font-family: 'Inter', sans-serif;
-      background: #ffffff;
-      color: #0f1419;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      zoom: 1.1;
-    }
-
-
-    /* ── Page wrapper ── */
-    .page-wrapper {
-      padding: 28px 24px 60px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* ── Section headings (standalone, no container) ── */
-    .section-heading {
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #999;
-      text-align: center;
-      margin-top: 72px;
-      margin-bottom: 20px;
-    }
-
-    /* ── Hero (no container, centered) ── */
-    .hero-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 18px 0 36px;
-    }
-
-    .hero-logo {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid #e5e5e5;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-      display: block;
-      margin: 0 auto 10px;
-    }
-
-    .hero-name-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      margin-bottom: 4px;
-    }
-
-    .hero-name {
-      font-size: 22px;
-      font-weight: 700;
-      color: #0f1419;
-    }
-
-    .hero-role {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 10px;
-    }
-
-    .hero-bio {
-      font-size: 15px;
-      color: #444;
-      margin-bottom: 24px;
+      font-size: 16px;
       line-height: 1.5;
-      max-width: 400px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .hero-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
+    /* ── Page wrapper ─────────────────────────── */
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 52px 28px 80px;
+    }
+
+    /* ── Hero ─────────────────────────────────── */
+    .hero { padding-bottom: 52px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      object-fit: cover;
+      border: 1px solid var(--border2);
+      display: block;
+    }
+
+    .hero-badge-name {
+      font-family: 'Inter Display', 'Inter', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.2;
+      display: block;
+    }
+
+    .hero-badge-role {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .hero-headline {
+      font-family: 'Inter Display', 'Inter', sans-serif;
+      font-size: clamp(36px, 6.5vw, 62px);
+      font-weight: 700;
+      line-height: 1.07;
+      letter-spacing: -0.025em;
+      color: var(--fg);
+      margin-bottom: 22px;
+      max-width: 700px;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 30px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
     .btn-primary {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 11px 26px;
-      background: #0071E3;
+      gap: 8px;
+      /* blue base + built-in gloss highlight at the top */
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%),
+        var(--accent);
       color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 20px;
-      text-decoration: none;
-      border: 1px solid rgba(0,82,180,0.5);
-      cursor: pointer;
-      transition: opacity 0.2s, box-shadow 0.2s;
       font-family: 'Inter', sans-serif;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.22),
-        inset 0 -1px 0 rgba(0,0,0,0.12),
-        0 2px 12px rgba(0,113,227,0.38);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 0px rgba(0,113,227,0);
+      transition: box-shadow 0.4s ease, transform 0.2s ease;
     }
+
+    /* Sweeping light on hover */
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -110%;
+      width: 55%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+      transform: skewX(-15deg);
+      transition: left 0.55s ease;
+      pointer-events: none;
+    }
+    .btn-primary:hover::after { left: 150%; }
 
     .btn-primary:hover {
-      opacity: 0.92;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.22),
-        inset 0 -1px 0 rgba(0,0,0,0.12),
-        0 4px 18px rgba(0,113,227,0.5);
+        0 0 18px rgba(0,113,227,0.75),
+        0 0 40px rgba(0,113,227,0.35),
+        0 2px 6px rgba(0,113,227,0.5);
+      transform: translateY(-1px);
     }
 
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 24px;
-      background: #fff;
-      color: #0f1419;
-      font-size: 14px;
+    /* ── Previously worked with ───────────────── */
+    .section-eyebrow {
+      font-size: 11px;
       font-weight: 600;
-      border-radius: 20px;
-      text-decoration: none;
-      border: 1px solid #e8e8e8;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      font-family: 'Inter', sans-serif;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 3px 10px rgba(0,0,0,0.05), 0 10px 28px rgba(0,0,0,0.04);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
-    .btn-secondary:hover { background: #f5f5f5; box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.07), 0 20px 48px rgba(0,0,0,0.06); }
-
-    /* ── Projects Grid (2×2, individual cards) ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .video-card {
-      background: #fff;
-      border-radius: 14px;
-      border: 1px solid #e8e8e8;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-    }
-
-    .video-card:hover {
-      transform: scale(1.025);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.07), 0 20px 48px rgba(0,0,0,0.06);
-    }
-
-    .video-card img.thumb {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-
-    .video-info {
-      padding: 10px 13px 13px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .video-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #0f1419;
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .video-creator {
-      font-size: 12px;
-      color: #777;
-    }
-
-    /* ── See More button ── */
-    .extra-card { display: none; }
-    .extra-card.shown { display: block; }
-
-    .see-more-wrap { text-align: center; margin-top: 16px; }
-
-    .see-more-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #F8F8F8;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 18px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: #999;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s;
-    }
-
-    .see-more-btn:hover { background: #efefef; }
-
-    .see-more-btn svg { transition: transform 0.3s ease; }
-    .see-more-btn.expanded svg { transform: rotate(180deg); }
-
-    /* ── Marquee (no container) ── */
+    /* ── Marquee ──────────────────────────────── */
     .marquee-wrapper {
       overflow: hidden;
-      margin: 36px -24px 0;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      margin: 0 -28px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
     }
 
     .marquee-track {
       display: flex;
-      padding: 6px 0;
+      padding: 3px 0;
       will-change: transform;
     }
 
     .marquee-set {
       display: flex;
-      gap: 28px;
+      gap: 12px;
       flex-shrink: 0;
-      padding-right: 28px;
+      padding-right: 12px;
     }
 
     .marquee-chip {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 15px 7px 8px;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
     .marquee-chip img {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
@@ -269,8 +197,7 @@
     .marquee-chip-name {
       font-size: 13px;
       font-weight: 600;
-      color: #0f1419;
-      line-height: 1.2;
+      color: var(--fg);
     }
 
     .marquee-chip-name::after {
@@ -288,615 +215,608 @@
     }
 
     .marquee-chip-subs {
-      font-size: 11px;
-      color: #aaa;
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 1px;
     }
 
-    /* ── Testimonials Grid (2×3, individual cards) ── */
-    .testimonials-grid {
+    /* ── Divider ──────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 56px 0;
+    }
+
+    /* ── Section label ────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── Work grid ────────────────────────────── */
+    .work-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .work-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: border-color 0.22s, transform 0.22s;
+    }
+    .work-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+    }
+
+    .work-card-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-card-body {
+      padding: 12px 13px 13px;
+    }
+
+    .work-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+
+    .work-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 100px;
+      padding: 6px 13px 6px 7px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .work-card-tag img {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-card-tag-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .check-badge {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* extra cards */
+    .extra-card { display: none; }
+
+    /* ── See More ─────────────────────────────── */
+    .see-more-wrap {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .see-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      color: var(--fg);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .see-more-btn:hover {
+      border-color: rgba(255,255,255,0.26);
+      background: rgba(255,255,255,0.04);
+    }
+    .see-more-btn svg { transition: transform 0.3s ease; }
+    .see-more-btn.expanded svg { transform: rotate(180deg); }
+
+    /* ── Testimonials ─────────────────────────── */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
 
     .testi-card {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
     }
 
-    .testi-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .testi-author {
+    .testi-top {
       display: flex;
       align-items: center;
-      gap: 8px;
-      min-width: 0;
+      gap: 11px;
+      margin-bottom: 13px;
     }
 
     .testi-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
+      border: 1.5px solid var(--border2);
     }
-
-    .testi-info { display: flex; flex-direction: column; min-width: 0; }
 
     .testi-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg);
+      display: block;
+      line-height: 1.25;
+    }
+
+    .testi-subs {
       font-size: 12px;
-      font-weight: 600;
-      color: #0f1419;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
     }
-
-    .testi-subs { font-size: 11px; color: #888; }
-
-    .testi-stars {
-      display: flex;
-      gap: 2px;
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-
-    .testi-stars svg { width: 11px; height: 11px; }
 
     .testi-quote {
-      font-size: 12.5px;
-      color: #333;
-      line-height: 1.55;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(245,245,247,0.65);
+      font-style: italic;
     }
 
-    /* ── Contact (centered, no form) ── */
-    .contact-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* ── Contact ──────────────────────────────── */
+    .contact-section {
       text-align: center;
     }
 
     .contact-heading {
-      font-family: 'Inter', sans-serif;
-      font-size: 20px;
+      font-family: 'Inter Display', 'Inter', sans-serif;
+      font-size: clamp(28px, 5vw, 46px);
       font-weight: 700;
-      color: #0f1419;
+      letter-spacing: -0.022em;
       margin-bottom: 10px;
+      line-height: 1.08;
     }
 
-    .contact-stats {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.9;
-      white-space: pre-line;
-      margin-bottom: 20px;
+    .contact-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 26px;
     }
 
-    .social-boxes {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .social-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 54px;
-      height: 54px;
-      border: 1px solid #ececec;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: transform 0.18s, box-shadow 0.18s;
-      background: #F8F8F8;
-      box-shadow: none;
-    }
-
-    .social-box:hover {
-      transform: scale(1.07);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.07), 0 20px 48px rgba(0,0,0,0.06);
-    }
-
-    .social-box svg { width: 22px; height: 22px; }
-
-    /* ── Footer ── */
+    /* ── Footer ───────────────────────────────── */
     .footer {
-      margin-top: 64px;
-      padding-bottom: 40px;
-      text-align: center;
-      font-size: 12px;
-      color: #bbb;
+      margin-top: 56px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    /* ── Testimonials see-more (mobile only) ── */
-    .testi-see-more-wrap { display: none; }
+    .footer-copy { font-size: 12px; color: var(--muted); }
 
-    /* ── Mobile ── */
-    @media (max-width: 640px) {
-      .projects-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr 1fr; }
-      .social-boxes { gap: 8px; }
-      .testi-extra { display: none; }
-      .testi-extra.shown { display: flex; }
-      .testi-see-more-wrap { display: block; }
+    .footer-links { display: flex; gap: 14px; align-items: center; }
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: opacity 0.18s;
+      opacity: 0.75;
     }
+    .footer-links a:hover { opacity: 1; }
+    .footer-links svg { width: 18px; height: 18px; display: block; }
+    .footer-links img { display: block; }
 
-    @media (max-width: 420px) {
-      .testimonials-grid { grid-template-columns: 1fr; }
+    /* ── Mobile ───────────────────────────────── */
+    @media (max-width: 580px) {
+      .page { padding: 36px 20px 64px; }
+      .work-grid, .testi-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 34px; }
+      .testi-grid .testi-card:nth-child(5),
+      .testi-grid .testi-card:nth-child(6) { display: none; }
     }
   </style>
 </head>
 <body>
 
+<div class="page">
 
-  <div class="page-wrapper">
-
-    <!-- Hero -->
-    <section id="home" class="hero-section">
-      <img src="textured.png" alt="vfxparker" class="hero-logo" />
-      <div class="hero-name-row">
-        <span class="hero-name">Parker Bierer</span>
-      </div>
-      <p class="hero-role">Video Editor</p>
-      <p class="hero-bio">Specializing in high-energy sports, IRL, and gaming videos.</p>
-      <div class="hero-buttons">
-        <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" class="btn-primary">Let's Work</a>
-      </div>
-    </section>
-
-    <!-- Marquee (no heading) -->
-    <div class="marquee-wrapper">
-      <div class="marquee-track">
-        <div class="marquee-set">
-          <div class="marquee-chip"><img src="tristan-jass.jpg" alt="Tristan Jass" /><div><div class="marquee-chip-name">Tristan Jass</div><div class="marquee-chip-subs">5.6M subs</div></div></div>
-          <div class="marquee-chip"><img src="jiedel.jpg" alt="Jiedel" /><div><div class="marquee-chip-name">Jiedel</div><div class="marquee-chip-subs">4.1M subs</div></div></div>
-          <div class="marquee-chip"><img src="ominous nebula.jpg" alt="Ominous Nebula" /><div><div class="marquee-chip-name">Ominous Nebula</div><div class="marquee-chip-subs">2.6M subs</div></div></div>
-          <div class="marquee-chip"><img src="mcdeezy.jpg" alt="McDeezy" /><div><div class="marquee-chip-name">McDeezy</div><div class="marquee-chip-subs">2.4M subs</div></div></div>
-          <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><div><div class="marquee-chip-name">ZackTTG</div><div class="marquee-chip-subs">1.2M subs</div></div></div>
-          <div class="marquee-chip"><img src="Chobuu.jpg" alt="Chobuu" /><div><div class="marquee-chip-name">Chobuu</div><div class="marquee-chip-subs">1.3M subs</div></div></div>
-          <div class="marquee-chip"><img src="julien-azelart.jpg" alt="Julien Azelart" /><div><div class="marquee-chip-name">Julien Azelart</div><div class="marquee-chip-subs">1.2M subs</div></div></div>
-          <div class="marquee-chip"><img src="supefron.jpg" alt="SupEfron" /><div><div class="marquee-chip-name">SupEfron</div><div class="marquee-chip-subs">720K subs</div></div></div>
-          <div class="marquee-chip"><img src="relief.jpg" alt="Relief" /><div><div class="marquee-chip-name">Relief</div><div class="marquee-chip-subs">360K subs</div></div></div>
-          <div class="marquee-chip"><img src="crispydan.jpg" alt="CrispyDan" /><div><div class="marquee-chip-name">CrispyDan</div><div class="marquee-chip-subs">310K subs</div></div></div>
-          <div class="marquee-chip"><img src="PB blake.jpg" alt="PB Blake" /><div><div class="marquee-chip-name">PB Blake</div><div class="marquee-chip-subs">70K subs</div></div></div>
-          <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="Systemzee Reacts" /><div><div class="marquee-chip-name">Systemzee Reacts</div><div class="marquee-chip-subs">30K subs</div></div></div>
-          <div class="marquee-chip"><img src="abbas.jpg" alt="Abbas Rizvi" /><div><div class="marquee-chip-name">Abbas Rizvi</div><div class="marquee-chip-subs">9.4K subs</div></div></div>
-        </div>
-        <div class="marquee-set" aria-hidden="true">
-          <div class="marquee-chip"><img src="tristan-jass.jpg" alt="" /><div><div class="marquee-chip-name">Tristan Jass</div><div class="marquee-chip-subs">5.6M subs</div></div></div>
-          <div class="marquee-chip"><img src="jiedel.jpg" alt="" /><div><div class="marquee-chip-name">Jiedel</div><div class="marquee-chip-subs">4.1M subs</div></div></div>
-          <div class="marquee-chip"><img src="ominous nebula.jpg" alt="" /><div><div class="marquee-chip-name">Ominous Nebula</div><div class="marquee-chip-subs">2.6M subs</div></div></div>
-          <div class="marquee-chip"><img src="mcdeezy.jpg" alt="" /><div><div class="marquee-chip-name">McDeezy</div><div class="marquee-chip-subs">2.4M subs</div></div></div>
-          <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><div><div class="marquee-chip-name">ZackTTG</div><div class="marquee-chip-subs">1.2M subs</div></div></div>
-          <div class="marquee-chip"><img src="Chobuu.jpg" alt="" /><div><div class="marquee-chip-name">Chobuu</div><div class="marquee-chip-subs">1.3M subs</div></div></div>
-          <div class="marquee-chip"><img src="julien-azelart.jpg" alt="" /><div><div class="marquee-chip-name">Julien Azelart</div><div class="marquee-chip-subs">1.2M subs</div></div></div>
-          <div class="marquee-chip"><img src="supefron.jpg" alt="" /><div><div class="marquee-chip-name">SupEfron</div><div class="marquee-chip-subs">720K subs</div></div></div>
-          <div class="marquee-chip"><img src="relief.jpg" alt="" /><div><div class="marquee-chip-name">Relief</div><div class="marquee-chip-subs">360K subs</div></div></div>
-          <div class="marquee-chip"><img src="crispydan.jpg" alt="" /><div><div class="marquee-chip-name">CrispyDan</div><div class="marquee-chip-subs">310K subs</div></div></div>
-          <div class="marquee-chip"><img src="PB blake.jpg" alt="" /><div><div class="marquee-chip-name">PB Blake</div><div class="marquee-chip-subs">70K subs</div></div></div>
-          <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="" /><div><div class="marquee-chip-name">Systemzee Reacts</div><div class="marquee-chip-subs">30K subs</div></div></div>
-          <div class="marquee-chip"><img src="abbas.jpg" alt="" /><div><div class="marquee-chip-name">Abbas Rizvi</div><div class="marquee-chip-subs">9.4K subs</div></div></div>
-        </div>
+  <!-- ── Hero ───────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-badge">
+      <img src="textured.png" alt="vfxparker" class="hero-badge-logo" />
+      <div>
+        <span class="hero-badge-name">Parker Bierer</span>
+        <span class="hero-badge-role">Video Editor</span>
       </div>
     </div>
 
-    <!-- Projects -->
-    <h2 class="section-heading" id="project">Featured Projects</h2>
-    <div class="projects-grid">
+    <h1 class="hero-headline">I specialize in high-energy sports, IRL, and gaming videos.</h1>
+    <p class="hero-sub">20+ Creators &middot; 31M+ Views &middot; 16 yrs old &middot; MST Timezone</p>
+    <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" class="btn-primary">Let's Work</a>
+  </section>
 
-      <a class="video-card" href="https://www.youtube.com/watch?v=Tiltd2SDD4Y" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/Tiltd2SDD4Y/maxresdefault.jpg" alt="$1 vs $1000 Cooking Challenge!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">$1 vs $1000 Cooking Challenge!</span>
-          <span class="video-creator">ZackTTG</span>
-        </div>
-      </a>
+  <!-- ── Previously worked with ─────────────────────── -->
+  <p class="section-eyebrow">Previously worked with</p>
 
-      <a class="video-card" href="https://www.youtube.com/watch?v=-RBd9j-7ONI" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/-RBd9j-7ONI/maxresdefault.jpg" alt="Every 1v1 I Win, The Defender Gets TALLER!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">Every 1v1 I Win, The Defender Gets TALLER!</span>
-          <span class="video-creator">Tristan Jass</span>
-        </div>
-      </a>
-
-      <a class="video-card" href="https://www.youtube.com/watch?v=mpexOovllP4" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/mpexOovllP4/maxresdefault.jpg" alt="Every Time I Score, the Ball Changes!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">Every Time I Score, the Ball Changes!</span>
-          <span class="video-creator">ZackTTG</span>
-        </div>
-      </a>
-
-      <a class="video-card" href="https://www.youtube.com/watch?v=nI24n7jKx_g" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/nI24n7jKx_g/maxresdefault.jpg" alt="Mini Hoop March Madness!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">Mini Hoop March Madness!</span>
-          <span class="video-creator">Jiedel</span>
-        </div>
-      </a>
-
-      <a class="video-card extra-card" href="https://www.youtube.com/watch?v=-PSwiXKL0mE" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/-PSwiXKL0mE/maxresdefault.jpg" alt="I Built a HIDE AND SEEK CITY in Minecraft Hardcore!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</span>
-          <span class="video-creator">Julien Azelart</span>
-        </div>
-      </a>
-
-      <a class="video-card extra-card" href="https://www.youtube.com/watch?v=GW1PnupKLt4" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/GW1PnupKLt4/maxresdefault.jpg" alt="I Tested Banned Basketball Products" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">I Tested Banned Basketball Products</span>
-          <span class="video-creator">McDeezy</span>
-        </div>
-      </a>
-
-      <a class="video-card extra-card" href="https://www.youtube.com/watch?v=STGLqlmqWDs" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/STGLqlmqWDs/maxresdefault.jpg" alt="Who He Play For? NBA Trivia" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">Who He Play For? NBA Trivia</span>
-          <span class="video-creator">ZackTTG</span>
-        </div>
-      </a>
-
-      <a class="video-card extra-card" href="https://www.youtube.com/watch?v=r6GB76MGfyI" target="_blank" rel="noopener">
-        <img class="thumb" src="https://img.youtube.com/vi/r6GB76MGfyI/maxresdefault.jpg" alt="I Bought the WEIRDEST Item in EVERY Gas Station!" loading="lazy" />
-        <div class="video-info">
-          <span class="video-title">I Bought the WEIRDEST Item in EVERY Gas Station!</span>
-          <span class="video-creator">BoneHeads</span>
-        </div>
-      </a>
-
-    </div>
-
-    <div class="see-more-wrap">
-      <button class="see-more-btn" onclick="toggleMoreProjects(this)" aria-expanded="false">
-        <span>See more</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-    </div>
-
-    <!-- Testimonials -->
-    <h2 class="section-heading" id="testimonial">Testimonials</h2>
-    <div class="testimonials-grid">
-
-      <div class="testi-card">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="zackttg.jpg" alt="ZackTTG" />
-            <div class="testi-info"><span class="testi-name">ZackTTG</span><span class="testi-subs">1.24M subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"bro...that edit is incredible! you have no idea how wonderful it is to work with you!!"</p>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <div class="marquee-set">
+        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="Tristan Jass" /><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M</span></div>
+        <div class="marquee-chip"><img src="jiedel.jpg" alt="Jiedel" /><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M</span></div>
+        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="Ominous Nebula" /><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M</span></div>
+        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="McDeezy" /><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M</span></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M</span></div>
+        <div class="marquee-chip"><img src="Chobuu.jpg" alt="Chobuu" /><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M</span></div>
+        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="Julien Azelart" /><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M</span></div>
+        <div class="marquee-chip"><img src="supefron.jpg" alt="SupEfron" /><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K</span></div>
+        <div class="marquee-chip"><img src="relief.jpg" alt="Relief" /><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K</span></div>
+        <div class="marquee-chip"><img src="crispydan.jpg" alt="CrispyDan" /><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K</span></div>
+        <div class="marquee-chip"><img src="PB blake.jpg" alt="PB Blake" /><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K</span></div>
+        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="Systemzee Reacts" /><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K</span></div>
+        <div class="marquee-chip"><img src="abbas.jpg" alt="Abbas Rizvi" /><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K</span></div>
       </div>
-
-      <div class="testi-card">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="tristan-jass.jpg" alt="Tristan Jass" />
-            <div class="testi-info"><span class="testi-name">Trent - TJass Manager</span><span class="testi-subs">5.6M subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"Tristan wanted me to tell you you're a beast, your work ethic is insane."</p>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="jiedel.jpg" alt="Jiedel" />
-            <div class="testi-info"><span class="testi-name">Neal - Jiedel Manager</span><span class="testi-subs">4.05M subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"You f*cking crushed it and James loved what he's seen so far"</p>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="mcdeezy.jpg" alt="McDeezy" />
-            <div class="testi-info"><span class="testi-name">McDeezy</span><span class="testi-subs">2.43M subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"I finally watched the whole video and bro its actually super good. I think its exactly what i wanted it to look like!!!"</p>
-      </div>
-
-      <div class="testi-card testi-extra">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="julien-azelart.jpg" alt="Julien Azelart" />
-            <div class="testi-info"><span class="testi-name">Julien Azelart</span><span class="testi-subs">1.17M subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"The animations are really good, pacing is perfect. its amazing!"</p>
-      </div>
-
-      <div class="testi-card testi-extra">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="supefron.jpg" alt="SupEfron" />
-            <div class="testi-info"><span class="testi-name">SupEfron</span><span class="testi-subs">724K subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"Just had a look! It's perfect bro!"</p>
-      </div>
-
-      <div class="testi-card testi-extra">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="crispydan.jpg" alt="CrispyDan" />
-            <div class="testi-info"><span class="testi-name">CrispyDan</span><span class="testi-subs">313K subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"He gets videos done quick, great effects, and very communicative."</p>
-      </div>
-
-      <div class="testi-card testi-extra">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="systemzee-reacts.jpg" alt="Systemzee Reacts" />
-            <div class="testi-info"><span class="testi-name">Systemzee Reacts</span><span class="testi-subs">28.6K subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"Awesome! Really happy with how this one came together."</p>
-      </div>
-
-      <div class="testi-card testi-extra">
-        <div class="testi-header">
-          <div class="testi-author">
-            <img class="testi-avatar" src="abbas.jpg" alt="Abbas Rizvi" />
-            <div class="testi-info"><span class="testi-name">Abbas Rizvi</span><span class="testi-subs">9.41K subs</span></div>
-          </div>
-          <div class="testi-stars">
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-            <svg viewBox="0 0 15 15" fill="#0071E3"><path d="M 2.869 14.25 L 4.088 8.981 L 0 5.438 L 5.4 4.968 L 7.5 0 L 9.6 4.969 L 15 5.437 L 10.912 8.981 L 12.132 14.25 L 7.5 11.456 Z"/></svg>
-          </div>
-        </div>
-        <p class="testi-quote">"AMAZING EDITOR AND NAILED EVERY ANIMATION"</p>
-      </div>
-
-    </div>
-
-    <div class="testi-see-more-wrap see-more-wrap">
-      <button class="see-more-btn" onclick="toggleMoreTestimonials(this)" aria-expanded="false">
-        <span>See more</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-    </div>
-
-    <!-- Contact -->
-    <h2 class="section-heading" id="contact">Contact</h2>
-    <div class="contact-center">
-      <p class="contact-heading">Let's work together.</p>
-      <p class="contact-stats">· 20+ Creators
-· 31M+ Views
-· 2 Years Experience
-
-16 yrs old — MST Timezone</p>
-      <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" class="btn-primary" style="margin-bottom: 24px;">Let's Work</a>
-      <div class="social-boxes">
-        <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" class="social-box" aria-label="X / Twitter">
-          <svg viewBox="0 0 24 24" fill="#000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://ytjobs.co/talent/profile/133222?r=879" target="_blank" rel="noopener" class="social-box" aria-label="YTJobs">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAOvSURBVHgB5Va/TxRBFP7e3CUmYCIU1J69JvwDKocFBJszRuwEGxIKc/gnUBoLTi3USsklJsagWHlakCu004iVdpw1GM/mjgTCOLvz683s3nLGknfZzO7Mm3nf+96POeCkCw2jJGfm6iC5otQrGE466mkDR6vUanXwPwDk7NwzNSyarw6GEqp4IEfVIhBlFBtf1MYTw7J6nDd+32wFJNYgUYOkNTV1bZBuIQNy5upXRf2k8uLcsMbd3qnaGE4d7Kj9Y9jvjVO73c3TK2QgNU7oKk+0V/8k+2qTaKuXGkZGzqgxF0DAgKacFpTHFbNcCbWVupR6LHoE6aOF0PtKpY5eE8m4Ti+azzMAwmQrEHuoMyZyAMRzikNK58isN6i5fjc9znku5YLFkj4ycZXTo76JQuP6W+uHc0wP1jB5drAiby3WHQC1vZ4qcFaIwgQNveQG/eHeIANH2nsLMrWa6tWS17IxOYlYdLxluuoNIXj3npMPZgqOTBjInWXZJW1dzU15BmKqE7s6AlkWrkwDF87zWBswhhkhKB35nsSwnkfAFPLKMKZee6k3j45KrNT1+tYW8PIVYW+PZz45fb9PBky4QGvfswyEhkO6T5/24KYVE08fAzfnoeY1A4LpCxMWD4aHUVogwhnLCkWlRciQo2T+BnD/HlC9DBMG8wj/zelPw+GcihjgpWeT0Gb8YKDAxASwvAw8eqDfHc2sWuyZwiVhACAsPd7RePYLQSiSxPjDBrC05Pda+oU1ykbk54AMqWToBzEQy6WLwMhoVLKU7SXIVoGu07R1Jr+4dIiONf79B/BmE+j38xwIu6MDoGNNrqE4xAaU3zgYQFKOG6+Bj5893XHi+eSQIYCwy7HEMe+uAnLs93rAuxbw/oPyumeoDfoAywVkKiq/EcVJF+eDlc9fgGZTef+L3YAiat2cdkEslwIG8h+95u+Dfk9id5ewm9C9oePtWnJqwIyWckM3gCifIgbsIVkwMuiEvT7hTj03m03+mAoKmCNz+7EU8ACFUezmUC1zKkDmgNTJay3YFuzyx1omzZDrD/SbAcA24o5HJusIPjGF8QZAcO8HwIPuJ+HviAi8fOsBHJZuK70/2lCQveFfKXADLN4asL9wECQxC5ED2cVBadUBoNZmR6GsqtefJlm8xxlPwS4lE29dVuTWBNvreoIBCezg6LBKTxodsLRwImvXayiJs0p5PEUvDE4hvEd81OuJHunRxEiYv2Fet6t0vqFc3qZGI/cv+smUv4aWBd6UVlOaAAAAAElFTkSuQmCC" alt="YTJobs" width="22" height="22" style="object-fit:contain;" />
-        </a>
-        <a href="https://discordid.netlify.app/?id=762402570286792745" target="_blank" rel="noopener" class="social-box" aria-label="Discord">
-          <svg viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        </a>
+      <div class="marquee-set" aria-hidden="true">
+        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="" /><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M</span></div>
+        <div class="marquee-chip"><img src="jiedel.jpg" alt="" /><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M</span></div>
+        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="" /><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M</span></div>
+        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="" /><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M</span></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M</span></div>
+        <div class="marquee-chip"><img src="Chobuu.jpg" alt="" /><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M</span></div>
+        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="" /><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M</span></div>
+        <div class="marquee-chip"><img src="supefron.jpg" alt="" /><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K</span></div>
+        <div class="marquee-chip"><img src="relief.jpg" alt="" /><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K</span></div>
+        <div class="marquee-chip"><img src="crispydan.jpg" alt="" /><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K</span></div>
+        <div class="marquee-chip"><img src="PB blake.jpg" alt="" /><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K</span></div>
+        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="" /><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K</span></div>
+        <div class="marquee-chip"><img src="abbas.jpg" alt="" /><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K</span></div>
       </div>
     </div>
+  </div>
 
-    <footer class="footer">
-      &copy; All rights reserved &ndash; Parker Bierer &ndash; vfxparkerbierer@gmail.com
-    </footer>
+  <div class="divider"></div>
+
+  <!-- ── Selected Work ───────────────────────────────── -->
+  <p class="section-label">Selected Work</p>
+
+  <div class="work-grid">
+
+    <!-- visible 1 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=Tiltd2SDD4Y" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/Tiltd2SDD4Y/maxresdefault.jpg" alt="$1 vs $1000 Cooking Challenge!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">$1 vs $1000 Cooking Challenge!</p>
+        <div class="work-card-tag">
+          <img src="zackttg.jpg" alt="ZackTTG" />
+          <span class="work-card-tag-name">ZackTTG</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- visible 2 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=-RBd9j-7ONI" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/-RBd9j-7ONI/maxresdefault.jpg" alt="Every 1v1 I Win, The Defender Gets TALLER!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">Every 1v1 I Win, The Defender Gets TALLER!</p>
+        <div class="work-card-tag">
+          <img src="tristan-jass.jpg" alt="Tristan Jass" />
+          <span class="work-card-tag-name">Tristan Jass</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- visible 3 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=mpexOovllP4" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/mpexOovllP4/maxresdefault.jpg" alt="Every Time I Score, the Ball Changes!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">Every Time I Score, the Ball Changes!</p>
+        <div class="work-card-tag">
+          <img src="zackttg.jpg" alt="ZackTTG" />
+          <span class="work-card-tag-name">ZackTTG</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- visible 4 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=nI24n7jKx_g" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/nI24n7jKx_g/maxresdefault.jpg" alt="Mini Hoop March Madness!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">Mini Hoop March Madness!</p>
+        <div class="work-card-tag">
+          <img src="jiedel.jpg" alt="Jiedel" />
+          <span class="work-card-tag-name">Jiedel</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- extra 1 -->
+    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=-PSwiXKL0mE" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/-PSwiXKL0mE/maxresdefault.jpg" alt="I Built a HIDE AND SEEK CITY in Minecraft Hardcore!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</p>
+        <div class="work-card-tag">
+          <img src="julien-azelart.jpg" alt="Julien Azelart" />
+          <span class="work-card-tag-name">Julien Azelart</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- extra 2 -->
+    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=GW1PnupKLt4" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/GW1PnupKLt4/maxresdefault.jpg" alt="I Tested Banned Basketball Products" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">I Tested Banned Basketball Products</p>
+        <div class="work-card-tag">
+          <img src="mcdeezy.jpg" alt="McDeezy" />
+          <span class="work-card-tag-name">McDeezy</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- extra 3 -->
+    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=STGLqlmqWDs" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/STGLqlmqWDs/maxresdefault.jpg" alt="Who He Play For? NBA Trivia" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">Who He Play For? NBA Trivia</p>
+        <div class="work-card-tag">
+          <img src="zackttg.jpg" alt="ZackTTG" />
+          <span class="work-card-tag-name">ZackTTG</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- extra 4 -->
+    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=r6GB76MGfyI" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/r6GB76MGfyI/maxresdefault.jpg" alt="I Bought the WEIRDEST Item in EVERY Gas Station!" loading="lazy" />
+      <div class="work-card-body">
+        <p class="work-card-title">I Bought the WEIRDEST Item in EVERY Gas Station!</p>
+        <div class="work-card-tag">
+          <img src="crispydan.jpg" alt="CrispyDan" />
+          <span class="work-card-tag-name">CrispyDan</span>
+          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+      </div>
+    </a>
 
   </div>
 
-  <script>
-    function toggleMoreTestimonials(btn) {
-      var expanded = btn.classList.toggle('expanded');
-      btn.setAttribute('aria-expanded', expanded);
-      btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
-      var cards = document.querySelectorAll('.testi-extra');
+  <div class="see-more-wrap">
+    <button class="see-more-btn" id="see-more-btn" aria-expanded="false">
+      <span>See more</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
 
-      if (expanded) {
-        cards.forEach(function(c, i) {
-          c.style.display = 'flex';
-          c.style.opacity = '0';
-          c.style.transform = 'translateY(10px)';
+  <div class="divider"></div>
+
+  <!-- ── Testimonials ────────────────────────────────── -->
+  <p class="section-label">Testimonials</p>
+
+  <div class="testi-grid">
+
+    <!-- 1: Tristan Jass 5.6M -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="tristan-jass.jpg" alt="Tristan Jass" />
+        <div>
+          <span class="testi-name">Trent - Tristan Jass Manager <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">5.6M Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"Tristan wanted me to tell you you're a beast, your work ethic is insane."</p>
+    </div>
+
+    <!-- 2: Jiedel 4.05M -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="jiedel.jpg" alt="Jiedel" />
+        <div>
+          <span class="testi-name">Neal - Jiedel Manager <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">4.05M Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"You f*cking crushed it and James loved what he's seen so far."</p>
+    </div>
+
+    <!-- 3: McDeezy 2.43M -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="mcdeezy.jpg" alt="McDeezy" />
+        <div>
+          <span class="testi-name">McDeezy <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">2.43M Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"I finally watched the whole video and bro its actually super good. I think its exactly what i wanted it to look like!!!"</p>
+    </div>
+
+    <!-- 4: ZackTTG 1.24M -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="zackttg.jpg" alt="ZackTTG" />
+        <div>
+          <span class="testi-name">ZackTTG <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">1.24M Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"bro...that edit is incredible! you have no idea how wonderful it is to work with you!!"</p>
+    </div>
+
+    <!-- 5: Julien Azelart 1.17M -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="julien-azelart.jpg" alt="Julien Azelart" />
+        <div>
+          <span class="testi-name">Julien Azelart <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">1.17M Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"The animations are really good, pacing is perfect. its amazing!"</p>
+    </div>
+
+    <!-- 6: SupEfron 724K -->
+    <div class="testi-card">
+      <div class="testi-top">
+        <img class="testi-avatar" src="supefron.jpg" alt="SupEfron" />
+        <div>
+          <span class="testi-name">SupEfron <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">724K Subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">"Just had a look! It's perfect bro!"</p>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Contact ─────────────────────────────────────── -->
+  <div class="contact-section">
+    <h2 class="contact-heading">Let's work together.</h2>
+    <p class="contact-sub">DM me on X to get started.</p>
+    <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" class="btn-primary">Let's Work</a>
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────── -->
+  <footer class="footer">
+    <span class="footer-copy">&copy; Parker Bierer &ndash; vfxparkerbierer@gmail.com</span>
+    <div class="footer-links">
+      <!-- X / Twitter -->
+      <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" aria-label="Twitter / X" style="color:#F5F5F7;">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <!-- YTJobs -->
+      <a href="https://ytjobs.co/talent/profile/133222?r=879" target="_blank" rel="noopener" aria-label="YTJobs">
+        <img src="https://ytjobs.co/favicon.ico" alt="YTJobs" style="width:18px;height:18px;object-fit:contain;border-radius:3px;" />
+      </a>
+      <!-- Discord -->
+      <a href="https://discordid.netlify.app/?id=762402570286792745" target="_blank" rel="noopener" aria-label="Discord" style="color:#5865F2;">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.031.052a19.899 19.899 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  // ── See More ──────────────────────────────────────────────────────────────
+  document.getElementById('see-more-btn').addEventListener('click', function() {
+    var btn = this;
+    var expanded = btn.classList.toggle('expanded');
+    btn.setAttribute('aria-expanded', expanded);
+    btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
+    var cards = document.querySelectorAll('.extra-card');
+
+    if (expanded) {
+      cards.forEach(function(c, i) {
+        c.style.display = 'block';
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(12px)';
+        setTimeout(function() {
+          c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
+          c.style.opacity = '1';
+          c.style.transform = 'translateY(0)';
           setTimeout(function() {
-            c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
-            c.style.opacity = '1';
-            c.style.transform = 'translateY(0)';
-            setTimeout(function() {
-              c.style.transition = '';
-              c.style.opacity = '';
-              c.style.transform = '';
-            }, 420);
-          }, 20 + i * 70);
-        });
-      } else {
-        cards.forEach(function(c) {
-          c.style.transition = 'opacity 0.22s ease';
-          c.style.opacity = '0';
-          setTimeout(function() {
-            c.style.display = 'none';
             c.style.transition = '';
             c.style.opacity = '';
-          }, 240);
-        });
-      }
-    }
-
-    function toggleMoreProjects(btn) {
-      var expanded = btn.classList.toggle('expanded');
-      btn.setAttribute('aria-expanded', expanded);
-      btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
-      var cards = document.querySelectorAll('.extra-card');
-
-      if (expanded) {
-        cards.forEach(function(c, i) {
-          c.style.display = 'block';
-          c.style.opacity = '0';
-          c.style.transform = 'translateY(10px)';
-          // 20ms base delay ensures display:block is painted before transition starts
-          setTimeout(function() {
-            c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
-            c.style.opacity = '1';
-            c.style.transform = 'translateY(0)';
-            // Clear inline styles after animation so card hover works normally
-            setTimeout(function() {
-              c.style.transition = '';
-              c.style.opacity = '';
-              c.style.transform = '';
-            }, 420);
-          }, 20 + i * 70);
-        });
-      } else {
-        cards.forEach(function(c) {
-          c.style.transition = 'opacity 0.22s ease';
-          c.style.opacity = '0';
-          setTimeout(function() {
-            c.style.display = 'none';
-            c.style.transition = '';
-            c.style.opacity = '';
-          }, 240);
-        });
-      }
-    }
-
-    // ── Lenis smooth scroll (Framer-style) ──────────────────────────────────
-    var lenis = new Lenis({
-      duration: 1.1,
-      easing: function(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
-      smoothWheel: true,
-    });
-    (function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    })(0);
-
-    // Anchor links via Lenis
-    document.addEventListener('click', function(e) {
-      var a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-      var href = a.getAttribute('href');
-      if (href === '#') return;
-      var target = document.querySelector(href);
-      if (!target) return;
-      e.preventDefault();
-      lenis.scrollTo(target, { offset: -80, duration: 0.9 });
-    });
-
-    // ── Marquee ──────────────────────────────────────────────────────────────
-    (function() {
-      var track = document.querySelector('.marquee-track');
-      var set1  = document.querySelector('.marquee-set');
-      if (!track || !set1) return;
-
-      var pos = 0;
-      var normalSpeed  = 0.75;
-      var slowSpeed    = 0.12;
-      var currentSpeed = normalSpeed;
-      var targetSpeed  = normalSpeed;
-
-      var wrapper = track.closest('.marquee-wrapper');
-      if (wrapper) {
-        wrapper.addEventListener('mouseenter', function() { targetSpeed = slowSpeed; });
-        wrapper.addEventListener('mouseleave', function() { targetSpeed = normalSpeed; });
-      }
-
-      // Measure only after fonts + images are fully loaded so chip widths are final.
-      window.addEventListener('load', function() {
-        var setWidth = set1.offsetWidth;
-
-        function tick() {
-          currentSpeed += (targetSpeed - currentSpeed) * 0.05;
-          pos += currentSpeed;
-          if (pos >= setWidth) pos -= setWidth;
-          track.style.transform = 'translateX(-' + pos + 'px)';
-          requestAnimationFrame(tick);
-        }
-
-        requestAnimationFrame(tick);
+            c.style.transform = '';
+          }, 420);
+        }, 20 + i * 70);
       });
-    })();
+    } else {
+      cards.forEach(function(c) {
+        c.style.transition = 'opacity 0.2s ease';
+        c.style.opacity = '0';
+        setTimeout(function() {
+          c.style.display = 'none';
+          c.style.transition = '';
+          c.style.opacity = '';
+        }, 230);
+      });
+    }
+  });
 
-  </script>
+  // ── Lenis smooth scroll ───────────────────────────────────────────────────
+  var lenis = new Lenis({
+    duration: 1.1,
+    easing: function(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
+    smoothWheel: true,
+  });
+  (function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  })(0);
+
+  // ── Marquee ───────────────────────────────────────────────────────────────
+  (function() {
+    var track = document.querySelector('.marquee-track');
+    var set1  = document.querySelector('.marquee-set');
+    if (!track || !set1) return;
+
+    var pos = 0;
+    var normalSpeed  = 0.6;
+    var slowSpeed    = 0.1;
+    var currentSpeed = normalSpeed;
+    var targetSpeed  = normalSpeed;
+
+    var wrapper = track.closest('.marquee-wrapper');
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', function() { targetSpeed = slowSpeed; });
+      wrapper.addEventListener('mouseleave', function() { targetSpeed = normalSpeed; });
+    }
+
+    window.addEventListener('load', function() {
+      var setWidth = set1.offsetWidth;
+
+      function tick() {
+        currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+        pos += currentSpeed;
+        if (pos >= setWidth) pos -= setWidth;
+        track.style.transform = 'translateX(-' + pos + 'px)';
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    });
+  })();
+</script>
 
 </body>
 </html>
