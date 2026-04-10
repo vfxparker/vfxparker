@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
   <link rel="icon" href="Favicon black.png" media="(prefers-color-scheme: light)" />
   <link rel="icon" href="Favicon white.png" media="(prefers-color-scheme: dark)" />
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: auto; }
@@ -871,54 +872,28 @@
       }
     }
 
-    (function() {
-      function smoothScrollTo(targetY, duration) {
-        var startY = window.scrollY, diff = targetY - startY, startTime = null;
-        function step(t) {
-          if (!startTime) startTime = t;
-          var el = Math.min((t - startTime) / duration, 1);
-          var ease = el < 0.5 ? 4*el*el*el : 1 - Math.pow(-2*el+2,3)/2;
-          window.scrollTo(0, startY + diff * ease);
-          if (el < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      document.addEventListener('click', function(e) {
-        var a = e.target.closest('a[href^="#"]');
-        if (!a) return;
-        var href = a.getAttribute('href');
-        if (href === '#') return;
-        var target = document.querySelector(href);
-        if (!target) return;
-        e.preventDefault();
-        smoothScrollTo(target.getBoundingClientRect().top + window.scrollY - 80, 600);
-      });
-    })();
+    // ── Lenis smooth scroll (Framer-style) ──────────────────────────────────
+    var lenis = new Lenis({
+      duration: 1.1,
+      easing: function(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
+      smoothWheel: true,
+    });
+    (function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    })(0);
 
-    (function() {
-      var samples = [], active = false, pos = 0, vel = 0, timer;
-      var fr = 0.94;
-      var maxS = function() { return document.documentElement.scrollHeight - window.innerHeight; };
-      window.addEventListener('wheel', function(e) {
-        active = false; clearTimeout(timer);
-        samples.push(e.deltaY); if (samples.length > 5) samples.shift();
-        timer = setTimeout(function() {
-          if (!samples.length) return;
-          vel = samples.reduce(function(a,b){return a+b;},0) / samples.length;
-          vel = Math.max(-22, Math.min(22, vel));
-          samples = []; pos = window.scrollY; active = true;
-          requestAnimationFrame(coast);
-        }, 50);
-      }, { passive: true });
-      function coast() {
-        if (!active) return;
-        vel *= fr; if (Math.abs(vel) < 0.4) { active = false; return; }
-        var max = maxS(), next = pos + vel;
-        if (next <= 0) { pos *= 0.75; if (pos < 0.5) { pos = 0; active = false; } window.scrollTo(0,pos); requestAnimationFrame(coast); return; }
-        if (next >= max) { pos += (max-pos)*0.3; if (max-pos < 0.5) { pos = max; active = false; } window.scrollTo(0,pos); requestAnimationFrame(coast); return; }
-        pos = next; window.scrollTo(0,pos); requestAnimationFrame(coast);
-      }
-    })();
+    // Anchor links via Lenis
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -80, duration: 0.9 });
+    });
 
     // ── Marquee smooth speed ──────────────────────────────────────────────────
     (function() {
