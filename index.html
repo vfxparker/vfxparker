@@ -43,7 +43,7 @@
     }
 
     /* ── Hero ─────────────────────────────────── */
-    .hero { padding-bottom: 52px; }
+    .hero { padding-bottom: 52px; text-align: center; }
 
     .hero-badge {
       display: inline-flex;
@@ -87,6 +87,8 @@
       color: var(--fg);
       margin-bottom: 22px;
       max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-sub {
@@ -151,6 +153,7 @@
       letter-spacing: 0.1em;
       color: var(--muted);
       margin-bottom: 16px;
+      text-align: center;
     }
 
     /* ── Marquee ──────────────────────────────── */
@@ -177,47 +180,54 @@
     .marquee-chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 7px 15px 7px 8px;
+      border-radius: 12px;
+      padding: 8px 14px 8px 8px;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
     .marquee-chip img {
-      width: 28px;
-      height: 28px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
+    }
+
+    .marquee-chip-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
     }
 
     .marquee-chip-name {
       font-size: 13px;
       font-weight: 600;
       color: var(--fg);
+      line-height: 1.2;
     }
 
     .marquee-chip-name::after {
       content: '';
       display: inline-block;
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='7' fill='%23c0c0c0'/%3E%3Cpath d='M4 7.2l2 2 4-4' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-size: contain;
-      margin-left: 4px;
+      margin-left: 3px;
       vertical-align: middle;
       position: relative;
       top: -1px;
     }
 
     .marquee-chip-subs {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
-      margin-left: 1px;
+      line-height: 1.2;
     }
 
     /* ── Divider ──────────────────────────────── */
@@ -235,6 +245,7 @@
       letter-spacing: 0.1em;
       color: var(--muted);
       margin-bottom: 20px;
+      text-align: center;
     }
 
     /* ── Work grid ────────────────────────────── */
@@ -455,7 +466,7 @@
   <section class="hero">
     <div class="hero-badge">
       <img src="textured.png" alt="vfxparker" class="hero-badge-logo" />
-      <div>
+      <div style="text-align: left;">
         <span class="hero-badge-name">Parker Bierer</span>
         <span class="hero-badge-role">Video Editor</span>
       </div>
@@ -472,34 +483,34 @@
   <div class="marquee-wrapper">
     <div class="marquee-track">
       <div class="marquee-set">
-        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="Tristan Jass" /><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M</span></div>
-        <div class="marquee-chip"><img src="jiedel.jpg" alt="Jiedel" /><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M</span></div>
-        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="Ominous Nebula" /><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M</span></div>
-        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="McDeezy" /><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M</span></div>
-        <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M</span></div>
-        <div class="marquee-chip"><img src="Chobuu.jpg" alt="Chobuu" /><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M</span></div>
-        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="Julien Azelart" /><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M</span></div>
-        <div class="marquee-chip"><img src="supefron.jpg" alt="SupEfron" /><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K</span></div>
-        <div class="marquee-chip"><img src="relief.jpg" alt="Relief" /><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K</span></div>
-        <div class="marquee-chip"><img src="crispydan.jpg" alt="CrispyDan" /><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K</span></div>
-        <div class="marquee-chip"><img src="PB blake.jpg" alt="PB Blake" /><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K</span></div>
-        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="Systemzee Reacts" /><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K</span></div>
-        <div class="marquee-chip"><img src="abbas.jpg" alt="Abbas Rizvi" /><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K</span></div>
+        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="Tristan Jass" /><div class="marquee-chip-text"><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="jiedel.jpg" alt="Jiedel" /><div class="marquee-chip-text"><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="Ominous Nebula" /><div class="marquee-chip-text"><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="McDeezy" /><div class="marquee-chip-text"><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="Chobuu.jpg" alt="Chobuu" /><div class="marquee-chip-text"><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="Julien Azelart" /><div class="marquee-chip-text"><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="supefron.jpg" alt="SupEfron" /><div class="marquee-chip-text"><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="relief.jpg" alt="Relief" /><div class="marquee-chip-text"><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="crispydan.jpg" alt="CrispyDan" /><div class="marquee-chip-text"><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="PB blake.jpg" alt="PB Blake" /><div class="marquee-chip-text"><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="Systemzee Reacts" /><div class="marquee-chip-text"><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="abbas.jpg" alt="Abbas Rizvi" /><div class="marquee-chip-text"><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K subscribers</span></div></div>
       </div>
       <div class="marquee-set" aria-hidden="true">
-        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="" /><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M</span></div>
-        <div class="marquee-chip"><img src="jiedel.jpg" alt="" /><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M</span></div>
-        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="" /><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M</span></div>
-        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="" /><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M</span></div>
-        <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M</span></div>
-        <div class="marquee-chip"><img src="Chobuu.jpg" alt="" /><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M</span></div>
-        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="" /><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M</span></div>
-        <div class="marquee-chip"><img src="supefron.jpg" alt="" /><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K</span></div>
-        <div class="marquee-chip"><img src="relief.jpg" alt="" /><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K</span></div>
-        <div class="marquee-chip"><img src="crispydan.jpg" alt="" /><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K</span></div>
-        <div class="marquee-chip"><img src="PB blake.jpg" alt="" /><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K</span></div>
-        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="" /><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K</span></div>
-        <div class="marquee-chip"><img src="abbas.jpg" alt="" /><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K</span></div>
+        <div class="marquee-chip"><img src="tristan-jass.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Tristan Jass</span><span class="marquee-chip-subs">5.6M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="jiedel.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="ominous nebula.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="mcdeezy.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="Chobuu.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="julien-azelart.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="supefron.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="relief.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="crispydan.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">CrispyDan</span><span class="marquee-chip-subs">310K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="PB blake.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">PB Blake</span><span class="marquee-chip-subs">70K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="systemzee-reacts.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Systemzee Reacts</span><span class="marquee-chip-subs">30K subscribers</span></div></div>
+        <div class="marquee-chip"><img src="abbas.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Abbas Rizvi</span><span class="marquee-chip-subs">9.4K subscribers</span></div></div>
       </div>
     </div>
   </div>
