@@ -36,13 +36,17 @@
     }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 900px 650px at 18% -80px, #1c1c1e 0%, transparent 70%),
+        radial-gradient(ellipse 700px 500px at 82% 105%, #161616 0%, transparent 65%);
       color: var(--fg);
       font-family: 'Inter', sans-serif;
       font-size: 16px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
+
 
     /* ── Page wrapper ─────────────────────────── */
     .page {
@@ -64,10 +68,10 @@
     .hero-badge-logo {
       width: 54px;
       height: 54px;
-      border-radius: 15px;
       object-fit: cover;
-      border: 1px solid var(--border2);
       display: block;
+      clip-path: url(#squircle);
+      filter: drop-shadow(0 0 0.5px rgba(255,255,255,0.18));
     }
 
     .hero-badge-name {
@@ -190,7 +194,9 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--surface);
+      background: rgba(19, 19, 19, 0.5);
+      backdrop-filter: blur(12px) saturate(150%);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 8px 14px 8px 8px;
@@ -269,13 +275,13 @@
       text-decoration: none;
       border-radius: 14px;
       overflow: hidden;
-      background: var(--surface);
       border: 1px solid var(--border);
+      position: relative;
       transition: border-color 0.22s, transform 0.22s;
     }
     .work-card:hover {
       border-color: var(--border2);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
     }
 
     .work-card-thumb {
@@ -285,51 +291,74 @@
       display: block;
     }
 
+    /* gradient overlay for title */
     .work-card-body {
-      padding: 12px 13px 13px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 12px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+      border-radius: 0 0 13px 13px;
     }
 
     .work-card-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--fg);
+      color: #F5F5F7;
       line-height: 1.35;
-      margin-bottom: 10px;
     }
 
-    .work-card-tag {
-      display: inline-flex;
+    /* creator pill badge — top right */
+    .work-card-creator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
       align-items: center;
-      gap: 7px;
-      border: 1px solid rgba(255,255,255,0.18);
+      gap: 5px;
+      padding: 5px 9px 5px 5px;
+      background: rgba(10, 10, 10, 0.58);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.11);
       border-radius: 100px;
-      padding: 6px 13px 6px 7px;
-      background: rgba(255,255,255,0.04);
+      font-size: 11px;
+      font-weight: 600;
+      color: #F5F5F7;
+      line-height: 1;
     }
-
-    .work-card-tag img {
-      width: 20px;
-      height: 20px;
+    .work-card-creator img {
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       object-fit: cover;
-      display: block;
-    }
-
-    .work-card-tag-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--fg);
+      flex-shrink: 0;
     }
 
     .check-badge {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       flex-shrink: 0;
       display: block;
     }
 
-    /* extra cards */
-    .extra-card { display: none; }
+    /* extra cards container */
+    #extra-grid-outer {
+      overflow: hidden;
+      max-height: 0;
+      margin-top: 0;
+      transition: max-height 0.72s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.55s ease;
+    }
+    #extra-grid-outer.open {
+      max-height: 1400px;
+      margin-top: 12px;
+    }
+    /* inner grid gets padding so hover lift isn't clipped */
+    #extra-grid {
+      padding-top: 6px;
+      padding-bottom: 2px;
+    }
 
     /* ── See More ─────────────────────────────── */
     .see-more-wrap {
@@ -350,10 +379,11 @@
       font-weight: 600;
       padding: 8px 18px;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.22s ease;
     }
     .see-more-btn:hover {
       border-color: rgba(255,255,255,0.26);
+      transform: translateY(-1px);
       background: rgba(255,255,255,0.04);
     }
     .see-more-btn svg { transition: transform 0.3s ease; }
@@ -367,7 +397,9 @@
     }
 
     .testi-card {
-      background: var(--surface);
+      background: rgba(19, 19, 19, 0.5);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 18px;
@@ -450,10 +482,10 @@
       display: flex;
       align-items: center;
       text-decoration: none;
-      transition: opacity 0.18s;
+      transition: opacity 0.18s, transform 0.22s ease;
       opacity: 0.75;
     }
-    .footer-links a:hover { opacity: 1; }
+    .footer-links a:hover { opacity: 1; transform: translateY(-1px); }
     .footer-links svg { width: 18px; height: 18px; display: block; }
     .footer-links img { display: block; }
 
@@ -468,6 +500,15 @@
   </style>
 </head>
 <body>
+
+<!-- SVG defs: squircle clip-path + grain noise filter -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden">
+  <defs>
+    <clipPath id="squircle" clipPathUnits="objectBoundingBox">
+      <path d="M0.5,0 C0.67,0 0.81,0 0.905,0.095 C1,0.19 1,0.33 1,0.5 C1,0.67 1,0.81 0.905,0.905 C0.81,1 0.67,1 0.5,1 C0.33,1 0.19,1 0.095,0.905 C0,0.81 0,0.67 0,0.5 C0,0.33 0,0.19 0.095,0.095 C0.19,0 0.33,0 0.5,0 Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <div class="page">
 
@@ -533,108 +574,64 @@
     <!-- visible 1 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=Tiltd2SDD4Y" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/Tiltd2SDD4Y/maxresdefault.jpg" alt="$1 vs $1000 Cooking Challenge!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">$1 vs $1000 Cooking Challenge!</p>
-        <div class="work-card-tag">
-          <img src="zackttg.jpg" alt="ZackTTG" />
-          <span class="work-card-tag-name">ZackTTG</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
+      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">$1 vs $1000 Cooking Challenge!</p></div>
     </a>
 
     <!-- visible 2 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=-RBd9j-7ONI" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/-RBd9j-7ONI/maxresdefault.jpg" alt="Every 1v1 I Win, The Defender Gets TALLER!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">Every 1v1 I Win, The Defender Gets TALLER!</p>
-        <div class="work-card-tag">
-          <img src="tristan-jass.jpg" alt="Tristan Jass" />
-          <span class="work-card-tag-name">Tristan Jass</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
+      <div class="work-card-creator"><img src="tristan-jass.jpg" alt="Tristan Jass" />Tristan Jass <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">Every 1v1 I Win, The Defender Gets TALLER!</p></div>
     </a>
 
     <!-- visible 3 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=mpexOovllP4" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/mpexOovllP4/maxresdefault.jpg" alt="Every Time I Score, the Ball Changes!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">Every Time I Score, the Ball Changes!</p>
-        <div class="work-card-tag">
-          <img src="zackttg.jpg" alt="ZackTTG" />
-          <span class="work-card-tag-name">ZackTTG</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
+      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">Every Time I Score, the Ball Changes!</p></div>
     </a>
 
     <!-- visible 4 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=nI24n7jKx_g" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/nI24n7jKx_g/maxresdefault.jpg" alt="Mini Hoop March Madness!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">Mini Hoop March Madness!</p>
-        <div class="work-card-tag">
-          <img src="jiedel.jpg" alt="Jiedel" />
-          <span class="work-card-tag-name">Jiedel</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <!-- extra 1 -->
-    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=-PSwiXKL0mE" target="_blank" rel="noopener">
-      <img class="work-card-thumb" src="https://img.youtube.com/vi/-PSwiXKL0mE/maxresdefault.jpg" alt="I Built a HIDE AND SEEK CITY in Minecraft Hardcore!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</p>
-        <div class="work-card-tag">
-          <img src="julien-azelart.jpg" alt="Julien Azelart" />
-          <span class="work-card-tag-name">Julien Azelart</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <!-- extra 2 -->
-    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=GW1PnupKLt4" target="_blank" rel="noopener">
-      <img class="work-card-thumb" src="https://img.youtube.com/vi/GW1PnupKLt4/maxresdefault.jpg" alt="I Tested Banned Basketball Products" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">I Tested Banned Basketball Products</p>
-        <div class="work-card-tag">
-          <img src="mcdeezy.jpg" alt="McDeezy" />
-          <span class="work-card-tag-name">McDeezy</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <!-- extra 3 -->
-    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=STGLqlmqWDs" target="_blank" rel="noopener">
-      <img class="work-card-thumb" src="https://img.youtube.com/vi/STGLqlmqWDs/maxresdefault.jpg" alt="Who He Play For? NBA Trivia" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">Who He Play For? NBA Trivia</p>
-        <div class="work-card-tag">
-          <img src="zackttg.jpg" alt="ZackTTG" />
-          <span class="work-card-tag-name">ZackTTG</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <!-- extra 4 -->
-    <a class="work-card extra-card" href="https://www.youtube.com/watch?v=r6GB76MGfyI" target="_blank" rel="noopener">
-      <img class="work-card-thumb" src="https://img.youtube.com/vi/r6GB76MGfyI/maxresdefault.jpg" alt="I Bought the WEIRDEST Item in EVERY Gas Station!" loading="lazy" />
-      <div class="work-card-body">
-        <p class="work-card-title">I Bought the WEIRDEST Item in EVERY Gas Station!</p>
-        <div class="work-card-tag">
-          <img src="crispydan.jpg" alt="CrispyDan" />
-          <span class="work-card-tag-name">CrispyDan</span>
-          <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-      </div>
+      <div class="work-card-creator"><img src="jiedel.jpg" alt="Jiedel" />Jiedel <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">Mini Hoop March Madness!</p></div>
     </a>
 
   </div>
+
+  <div id="extra-grid-outer"><div id="extra-grid" class="work-grid">
+
+    <!-- extra 1 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=-PSwiXKL0mE" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/-PSwiXKL0mE/hqdefault.jpg" alt="I Built a HIDE AND SEEK CITY in Minecraft Hardcore!" loading="lazy" />
+      <div class="work-card-creator"><img src="julien-azelart.jpg" alt="Julien Azelart" />Julien Azelart <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</p></div>
+    </a>
+
+    <!-- extra 2 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=GW1PnupKLt4" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/GW1PnupKLt4/maxresdefault.jpg" alt="I Tested Banned Basketball Products" loading="lazy" />
+      <div class="work-card-creator"><img src="mcdeezy.jpg" alt="McDeezy" />McDeezy <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">I Tested Banned Basketball Products</p></div>
+    </a>
+
+    <!-- extra 3 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=STGLqlmqWDs" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/STGLqlmqWDs/maxresdefault.jpg" alt="Who He Play For? NBA Trivia" loading="lazy" />
+      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">Who He Play For? NBA Trivia</p></div>
+    </a>
+
+    <!-- extra 4 -->
+    <a class="work-card" href="https://www.youtube.com/watch?v=r6GB76MGfyI" target="_blank" rel="noopener">
+      <img class="work-card-thumb" src="https://img.youtube.com/vi/r6GB76MGfyI/maxresdefault.jpg" alt="I Bought the WEIRDEST Item in EVERY Gas Station!" loading="lazy" />
+      <div class="work-card-creator"><img src="Boneheads.jpg" alt="Boneheads" />Boneheads <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="work-card-body"><p class="work-card-title">I Bought the WEIRDEST Item in EVERY Gas Station!</p></div>
+    </a>
+
+  </div></div><!-- /extra-grid /extra-grid-outer -->
 
   <div class="see-more-wrap">
     <button class="see-more-btn" id="see-more-btn" aria-expanded="false">
@@ -761,13 +758,18 @@
     var expanded = btn.classList.toggle('expanded');
     btn.setAttribute('aria-expanded', expanded);
     btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
-    var cards = document.querySelectorAll('.extra-card');
+    var outer = document.getElementById('extra-grid-outer');
+    var grid = document.getElementById('extra-grid');
+    var cards = grid.querySelectorAll('.work-card');
 
     if (expanded) {
-      cards.forEach(function(c, i) {
-        c.style.display = 'block';
+      // Animate cards in, then open the container
+      cards.forEach(function(c) {
         c.style.opacity = '0';
         c.style.transform = 'translateY(12px)';
+      });
+      outer.classList.add('open');
+      cards.forEach(function(c, i) {
         setTimeout(function() {
           c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
           c.style.opacity = '1';
@@ -777,18 +779,11 @@
             c.style.opacity = '';
             c.style.transform = '';
           }, 420);
-        }, 20 + i * 70);
+        }, 60 + i * 70);
       });
     } else {
-      cards.forEach(function(c) {
-        c.style.transition = 'opacity 0.2s ease';
-        c.style.opacity = '0';
-        setTimeout(function() {
-          c.style.display = 'none';
-          c.style.transition = '';
-          c.style.opacity = '';
-        }, 230);
-      });
+      // Container height animates to 0 — no layout jump
+      outer.classList.remove('open');
     }
   });
 
@@ -835,6 +830,7 @@
       requestAnimationFrame(tick);
     });
   })();
+
 </script>
 
 </body>
