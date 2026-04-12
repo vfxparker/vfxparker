@@ -132,6 +132,7 @@
       transition: box-shadow 0.4s ease, transform 0.2s ease;
     }
 
+
     /* Sweeping light on hover */
     .btn-primary::after {
       content: '';
@@ -191,12 +192,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(19, 19, 19, 0.5);
-      backdrop-filter: blur(12px) saturate(150%);
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 14px 8px 8px;
+      padding: 4px 14px 4px 0;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -367,8 +363,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: transparent;
-      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.22);
       border-radius: 100px;
       color: var(--fg);
       font-family: 'Inter', sans-serif;
@@ -379,9 +375,9 @@
       transition: border-color 0.2s, background 0.2s, transform 0.22s ease;
     }
     .see-more-btn:hover {
-      border-color: rgba(255,255,255,0.26);
+      border-color: rgba(255,255,255,0.38);
       transform: translateY(-1px);
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.1);
     }
     .see-more-btn svg { transition: transform 0.3s ease; }
     .see-more-btn.expanded svg { transform: rotate(180deg); }
