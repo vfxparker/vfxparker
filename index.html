@@ -25,7 +25,7 @@
     html { scroll-behavior: auto; }
 
     :root {
-      --bg:       #0A0A0A;
+      --bg:       #070707;
       --fg:       #F5F5F7;
       --accent:   #0071E3;
       --surface:  #131313;
@@ -42,6 +42,19 @@
       font-size: 16px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+
+    /* grain — static */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 9999;
     }
 
 
@@ -50,6 +63,8 @@
       max-width: 880px;
       margin: 0 auto;
       padding: 52px 28px 80px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── Hero ─────────────────────────────────── */
@@ -62,13 +77,36 @@
       margin-bottom: 32px;
     }
 
+    .hero-badge-logo-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
     .hero-badge-logo {
       width: 54px;
       height: 54px;
       object-fit: cover;
       display: block;
       clip-path: url(#squircle);
-      filter: drop-shadow(0 0 0.5px rgba(255,255,255,0.18));
+      filter: drop-shadow(0 1px 2px rgba(255,255,255,0.18));
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2.5px solid #fff;
+      box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.22);
+      animation: status-pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes status-pulse {
+      0%, 100% { box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.22), 0 0 0 0 rgba(34,197,94,0.45); }
+      50%       { box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.22), 0 0 0 4px rgba(34,197,94,0); }
     }
 
     .hero-badge-name {
@@ -110,15 +148,10 @@
     }
 
     .btn-primary {
-      position: relative;
-      overflow: hidden;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      /* blue base + built-in gloss highlight at the top */
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%),
-        var(--accent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%), var(--accent);
       color: #fff;
       font-family: 'Inter', sans-serif;
       font-size: 15px;
@@ -128,32 +161,14 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      box-shadow: 0 0 0px rgba(0,113,227,0);
-      transition: box-shadow 0.4s ease, transform 0.2s ease;
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.15), 0 1px 3px rgba(0,96,199,0.4);
+      transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
-
-
-    /* Sweeping light on hover */
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -110%;
-      width: 55%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
-      transform: skewX(-15deg);
-      transition: left 0.55s ease;
-      pointer-events: none;
-    }
-    .btn-primary:hover::after { left: 150%; }
 
     .btn-primary:hover {
-      box-shadow:
-        0 0 18px rgba(0,113,227,0.75),
-        0 0 40px rgba(0,113,227,0.35),
-        0 2px 6px rgba(0,113,227,0.5);
-      transform: translateY(-1px);
+      filter: brightness(1.18);
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.15), 0 1px 3px rgba(0,96,199,0.4), 0 0 22px rgba(0,113,227,0.45);
+      transform: translateY(-3px);
     }
 
     /* ── Previously worked with ───────────────── */
@@ -216,20 +231,20 @@
       font-weight: 600;
       color: var(--fg);
       line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .marquee-chip-name::after {
       content: '';
-      display: inline-block;
+      display: block;
       width: 12px;
       height: 12px;
+      flex-shrink: 0;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='7' fill='%23c0c0c0'/%3E%3Cpath d='M4 7.2l2 2 4-4' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-size: contain;
-      margin-left: 3px;
-      vertical-align: middle;
-      position: relative;
-      top: -1px;
     }
 
     .marquee-chip-subs {
@@ -270,6 +285,7 @@
       overflow: hidden;
       border: 1px solid var(--border);
       position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), inset 0 0 28px rgba(255,255,255,0.06);
       transition: border-color 0.22s, transform 0.22s;
     }
     .work-card:hover {
@@ -284,72 +300,51 @@
       display: block;
     }
 
-    /* gradient overlay for title */
+    /* frosted glass pill at bottom */
     .work-card-body {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 40px 12px 12px;
-      background: linear-gradient(to top, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
-      border-radius: 0 0 13px 13px;
-    }
-
-    .work-card-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #F5F5F7;
-      line-height: 1.35;
-    }
-
-    /* creator pill badge — top right */
-    .work-card-creator {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
+      bottom: 10px;
+      left: 10px;
+      max-width: calc(100% - 20px);
+      z-index: 3;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 9px 5px 5px;
-      background: rgba(10, 10, 10, 0.58);
+      gap: 8px;
+      padding: 6px 12px 6px 6px;
+      background: rgba(10,10,10,0.58);
       backdrop-filter: blur(14px) saturate(160%);
       -webkit-backdrop-filter: blur(14px) saturate(160%);
       border: 1px solid rgba(255,255,255,0.11);
       border-radius: 100px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #F5F5F7;
-      line-height: 1;
     }
-    .work-card-creator img {
-      width: 17px;
-      height: 17px;
+
+    .work-card-pfp {
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
     }
 
-    .check-badge {
-      width: 12px;
-      height: 12px;
-      flex-shrink: 0;
-      display: block;
+    .work-card-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #F5F5F7;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* extra cards container */
     #extra-grid-outer {
       overflow: hidden;
-      max-height: 0;
+      height: 0;
       margin-top: 0;
-      transition: max-height 0.72s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.55s ease;
-    }
-    #extra-grid-outer.open {
-      max-height: 1400px;
-      margin-top: 12px;
     }
     /* inner grid gets padding so hover lift isn't clipped */
     #extra-grid {
-      padding-top: 6px;
+      padding-top: 12px;
       padding-bottom: 2px;
     }
 
@@ -363,7 +358,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.22);
       border-radius: 100px;
       color: var(--fg);
@@ -372,12 +367,12 @@
       font-weight: 600;
       padding: 8px 18px;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.22s ease;
+      transition: background 0.2s, border-color 0.2s, transform 0.22s ease;
     }
     .see-more-btn:hover {
+      background: rgba(255,255,255,0.1);
       border-color: rgba(255,255,255,0.38);
       transform: translateY(-1px);
-      background: rgba(255,255,255,0.1);
     }
     .see-more-btn svg { transition: transform 0.3s ease; }
     .see-more-btn.expanded svg { transform: rotate(180deg); }
@@ -385,55 +380,62 @@
     /* ── Testimonials ─────────────────────────── */
     .testi-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
     .testi-card {
-      background: rgba(19, 19, 19, 0.5);
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .testi-top {
+    .testi-card.featured { grid-column: span 2; }
+    .testi-card.wide     { grid-column: span 2; }
+
+    .testi-header {
       display: flex;
       align-items: center;
-      gap: 11px;
-      margin-bottom: 13px;
+      gap: 10px;
+    }
+
+    .testi-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
     }
 
     .testi-avatar {
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
-      border: 1.5px solid var(--border2);
     }
 
     .testi-name {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--fg);
-      display: block;
-      line-height: 1.25;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      line-height: 1.3;
     }
 
     .testi-subs {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
-      display: block;
-      margin-top: 2px;
     }
 
     .testi-quote {
-      font-size: 13.5px;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.65;
       color: rgba(245,245,247,0.65);
-      font-style: italic;
     }
 
     /* ── Contact ──────────────────────────────── */
@@ -482,11 +484,22 @@
     .footer-links svg { width: 18px; height: 18px; display: block; }
     .footer-links img { display: block; }
 
+    /* ── Animations ──────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
     /* ── Mobile ───────────────────────────────── */
     @media (max-width: 580px) {
       .page { padding: 36px 20px 64px; }
       .work-grid, .testi-grid { grid-template-columns: 1fr; }
       .hero-headline { font-size: 34px; }
+      .testi-card.featured, .testi-card.wide { grid-column: span 1; }
       .testi-grid .testi-card:nth-child(5),
       .testi-grid .testi-card:nth-child(6) { display: none; }
     }
@@ -503,12 +516,16 @@
   </defs>
 </svg>
 
+
 <div class="page">
 
   <!-- ── Hero ───────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-badge">
-      <img src="textured.png" alt="vfxparker" class="hero-badge-logo" />
+      <div class="hero-badge-logo-wrap">
+        <img src="textured.png" alt="vfxparker" class="hero-badge-logo" />
+        <span class="status-dot"></span>
+      </div>
       <div style="text-align: left;">
         <span class="hero-badge-name">Parker Bierer</span>
         <span class="hero-badge-role">Video Editor</span>
@@ -529,8 +546,8 @@
         <div class="marquee-chip"><img src="jiedel.jpg" alt="Jiedel" /><div class="marquee-chip-text"><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M subscribers</span></div></div>
         <div class="marquee-chip"><img src="ominous nebula.jpg" alt="Ominous Nebula" /><div class="marquee-chip-text"><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M subscribers</span></div></div>
         <div class="marquee-chip"><img src="mcdeezy.jpg" alt="McDeezy" /><div class="marquee-chip-text"><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M subscribers</span></div></div>
-        <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="Chobuu.jpg" alt="Chobuu" /><div class="marquee-chip-text"><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="ZackTTG" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="julien-azelart.jpg" alt="Julien Azelart" /><div class="marquee-chip-text"><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="supefron.jpg" alt="SupEfron" /><div class="marquee-chip-text"><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K subscribers</span></div></div>
         <div class="marquee-chip"><img src="relief.jpg" alt="Relief" /><div class="marquee-chip-text"><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K subscribers</span></div></div>
@@ -544,8 +561,8 @@
         <div class="marquee-chip"><img src="jiedel.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Jiedel</span><span class="marquee-chip-subs">4.1M subscribers</span></div></div>
         <div class="marquee-chip"><img src="ominous nebula.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Ominous Nebula</span><span class="marquee-chip-subs">2.6M subscribers</span></div></div>
         <div class="marquee-chip"><img src="mcdeezy.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">McDeezy</span><span class="marquee-chip-subs">2.4M subscribers</span></div></div>
-        <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="Chobuu.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Chobuu</span><span class="marquee-chip-subs">1.3M subscribers</span></div></div>
+        <div class="marquee-chip"><img src="zackttg.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">ZackTTG</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="julien-azelart.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Julien Azelart</span><span class="marquee-chip-subs">1.2M subscribers</span></div></div>
         <div class="marquee-chip"><img src="supefron.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">SupEfron</span><span class="marquee-chip-subs">720K subscribers</span></div></div>
         <div class="marquee-chip"><img src="relief.jpg" alt="" /><div class="marquee-chip-text"><span class="marquee-chip-name">Relief</span><span class="marquee-chip-subs">360K subscribers</span></div></div>
@@ -567,29 +584,25 @@
     <!-- visible 1 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=Tiltd2SDD4Y" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/Tiltd2SDD4Y/maxresdefault.jpg" alt="$1 vs $1000 Cooking Challenge!" loading="lazy" />
-      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">$1 vs $1000 Cooking Challenge!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="zackttg.jpg" alt="ZackTTG" /><p class="work-card-title">$1 vs $1000 Cooking Challenge!</p></div>
     </a>
 
     <!-- visible 2 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=-RBd9j-7ONI" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/-RBd9j-7ONI/maxresdefault.jpg" alt="Every 1v1 I Win, The Defender Gets TALLER!" loading="lazy" />
-      <div class="work-card-creator"><img src="tristan-jass.jpg" alt="Tristan Jass" />Tristan Jass <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">Every 1v1 I Win, The Defender Gets TALLER!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="tristan-jass.jpg" alt="Tristan Jass" /><p class="work-card-title">Every 1v1 I Win, The Defender Gets TALLER!</p></div>
     </a>
 
     <!-- visible 3 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=mpexOovllP4" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/mpexOovllP4/maxresdefault.jpg" alt="Every Time I Score, the Ball Changes!" loading="lazy" />
-      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">Every Time I Score, the Ball Changes!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="zackttg.jpg" alt="ZackTTG" /><p class="work-card-title">Every Time I Score, the Ball Changes!</p></div>
     </a>
 
     <!-- visible 4 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=nI24n7jKx_g" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/nI24n7jKx_g/maxresdefault.jpg" alt="Mini Hoop March Madness!" loading="lazy" />
-      <div class="work-card-creator"><img src="jiedel.jpg" alt="Jiedel" />Jiedel <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">Mini Hoop March Madness!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="jiedel.jpg" alt="Jiedel" /><p class="work-card-title">Mini Hoop March Madness!</p></div>
     </a>
 
   </div>
@@ -599,29 +612,25 @@
     <!-- extra 1 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=-PSwiXKL0mE" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/-PSwiXKL0mE/hqdefault.jpg" alt="I Built a HIDE AND SEEK CITY in Minecraft Hardcore!" loading="lazy" />
-      <div class="work-card-creator"><img src="julien-azelart.jpg" alt="Julien Azelart" />Julien Azelart <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="julien-azelart.jpg" alt="Julien Azelart" /><p class="work-card-title">I Built a HIDE AND SEEK CITY in Minecraft Hardcore!</p></div>
     </a>
 
     <!-- extra 2 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=GW1PnupKLt4" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/GW1PnupKLt4/maxresdefault.jpg" alt="I Tested Banned Basketball Products" loading="lazy" />
-      <div class="work-card-creator"><img src="mcdeezy.jpg" alt="McDeezy" />McDeezy <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">I Tested Banned Basketball Products</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="mcdeezy.jpg" alt="McDeezy" /><p class="work-card-title">I Tested Banned Basketball Products</p></div>
     </a>
 
     <!-- extra 3 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=STGLqlmqWDs" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/STGLqlmqWDs/maxresdefault.jpg" alt="Who He Play For? NBA Trivia" loading="lazy" />
-      <div class="work-card-creator"><img src="zackttg.jpg" alt="ZackTTG" />ZackTTG <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">Who He Play For? NBA Trivia</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="zackttg.jpg" alt="ZackTTG" /><p class="work-card-title">Who He Play For? NBA Trivia</p></div>
     </a>
 
     <!-- extra 4 -->
     <a class="work-card" href="https://www.youtube.com/watch?v=r6GB76MGfyI" target="_blank" rel="noopener">
       <img class="work-card-thumb" src="https://img.youtube.com/vi/r6GB76MGfyI/maxresdefault.jpg" alt="I Bought the WEIRDEST Item in EVERY Gas Station!" loading="lazy" />
-      <div class="work-card-creator"><img src="Boneheads.jpg" alt="Boneheads" />Boneheads <svg class="check-badge" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-      <div class="work-card-body"><p class="work-card-title">I Bought the WEIRDEST Item in EVERY Gas Station!</p></div>
+      <div class="work-card-body"><img class="work-card-pfp" src="Boneheads.jpg" alt="Boneheads" /><p class="work-card-title">I Bought the WEIRDEST Item in EVERY Gas Station!</p></div>
     </a>
 
   </div></div><!-- /extra-grid /extra-grid-outer -->
@@ -640,76 +649,73 @@
 
   <div class="testi-grid">
 
-    <!-- 1: Tristan Jass 5.6M -->
-    <div class="testi-card">
-      <div class="testi-top">
+    <!-- Row 1: TJass featured (span 2) + Jiedel (span 1) -->
+    <div class="testi-card featured">
+      <div class="testi-header">
         <img class="testi-avatar" src="tristan-jass.jpg" alt="Tristan Jass" />
-        <div>
-          <span class="testi-name">Trent - Tristan Jass Manager <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">5.6M Subscribers</span>
+        <div class="testi-meta">
+          <span class="testi-name">Trent – TJass Manager <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">5.6M subscribers</span>
         </div>
       </div>
-      <p class="testi-quote">"Tristan wanted me to tell you you're a beast, your work ethic is insane."</p>
+      <p class="testi-quote">Tristan wanted me to tell you you're a beast, your work ethic is insane.</p>
     </div>
 
-    <!-- 2: Jiedel 4.05M -->
     <div class="testi-card">
-      <div class="testi-top">
+      <div class="testi-header">
         <img class="testi-avatar" src="jiedel.jpg" alt="Jiedel" />
-        <div>
-          <span class="testi-name">Neal - Jiedel Manager <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">4.05M Subscribers</span>
+        <div class="testi-meta">
+          <span class="testi-name">Neal – Jiedel Manager <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">4.05M subscribers</span>
         </div>
       </div>
-      <p class="testi-quote">"You f*cking crushed it and James loved what he's seen so far."</p>
+      <p class="testi-quote">You f*cking crushed it and James loved what he's seen so far.</p>
     </div>
 
-    <!-- 3: McDeezy 2.43M -->
+    <!-- Row 2: ZackTTG (span 1) + McDeezy wide (span 2) -->
     <div class="testi-card">
-      <div class="testi-top">
-        <img class="testi-avatar" src="mcdeezy.jpg" alt="McDeezy" />
-        <div>
-          <span class="testi-name">McDeezy <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">2.43M Subscribers</span>
-        </div>
-      </div>
-      <p class="testi-quote">"I finally watched the whole video and bro its actually super good. I think its exactly what i wanted it to look like!!!"</p>
-    </div>
-
-    <!-- 4: ZackTTG 1.24M -->
-    <div class="testi-card">
-      <div class="testi-top">
+      <div class="testi-header">
         <img class="testi-avatar" src="zackttg.jpg" alt="ZackTTG" />
-        <div>
-          <span class="testi-name">ZackTTG <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">1.24M Subscribers</span>
+        <div class="testi-meta">
+          <span class="testi-name">ZackTTG <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">1.24M subscribers</span>
         </div>
       </div>
-      <p class="testi-quote">"bro...that edit is incredible! you have no idea how wonderful it is to work with you!!"</p>
+      <p class="testi-quote">bro...that edit is incredible! you have no idea how wonderful it is to work with you!!</p>
     </div>
 
-    <!-- 5: Julien Azelart 1.17M -->
-    <div class="testi-card">
-      <div class="testi-top">
+    <div class="testi-card wide">
+      <div class="testi-header">
+        <img class="testi-avatar" src="mcdeezy.jpg" alt="McDeezy" />
+        <div class="testi-meta">
+          <span class="testi-name">McDeezy <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">2.43M subscribers</span>
+        </div>
+      </div>
+      <p class="testi-quote">I finally watched the whole video and bro its actually super good. I think its exactly what i wanted it to look like!!!</p>
+    </div>
+
+    <!-- Row 3: Julien wide (span 2) + SupEfron (span 1) — hidden on mobile -->
+    <div class="testi-card wide">
+      <div class="testi-header">
         <img class="testi-avatar" src="julien-azelart.jpg" alt="Julien Azelart" />
-        <div>
-          <span class="testi-name">Julien Azelart <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">1.17M Subscribers</span>
+        <div class="testi-meta">
+          <span class="testi-name">Julien Azelart <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">1.17M subscribers</span>
         </div>
       </div>
-      <p class="testi-quote">"The animations are really good, pacing is perfect. its amazing!"</p>
+      <p class="testi-quote">The animations are really good, pacing is perfect. its amazing!</p>
     </div>
 
-    <!-- 6: SupEfron 724K -->
     <div class="testi-card">
-      <div class="testi-top">
+      <div class="testi-header">
         <img class="testi-avatar" src="supefron.jpg" alt="SupEfron" />
-        <div>
-          <span class="testi-name">SupEfron <svg style="width:13px;height:13px;vertical-align:middle;position:relative;top:-1px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
-          <span class="testi-subs">724K Subscribers</span>
+        <div class="testi-meta">
+          <span class="testi-name">SupEfron <svg style="width:11px;height:11px;flex-shrink:0;" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#c0c0c0"/><path d="M4 7.2l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <span class="testi-subs">724K subscribers</span>
         </div>
       </div>
-      <p class="testi-quote">"Just had a look! It's perfect bro!"</p>
+      <p class="testi-quote">Just had a look! It's perfect bro!</p>
     </div>
 
   </div>
@@ -728,7 +734,7 @@
     <span class="footer-copy">&copy; Parker Bierer &ndash; vfxparkerbierer@gmail.com</span>
     <div class="footer-links">
       <!-- X / Twitter -->
-      <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" aria-label="Twitter / X" style="color:#F5F5F7;">
+      <a href="https://x.com/vfxparker_" target="_blank" rel="noopener" aria-label="Twitter / X" style="color:var(--fg);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
       <!-- YTJobs -->
@@ -752,33 +758,128 @@
     btn.setAttribute('aria-expanded', expanded);
     btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
     var outer = document.getElementById('extra-grid-outer');
-    var grid = document.getElementById('extra-grid');
+    var grid  = document.getElementById('extra-grid');
     var cards = grid.querySelectorAll('.work-card');
+    var EASE  = 'cubic-bezier(0.4, 0, 0.2, 1)';
 
     if (expanded) {
-      // Animate cards in, then open the container
+      // Measure actual content height before animating
       cards.forEach(function(c) {
-        c.style.opacity = '0';
-        c.style.transform = 'translateY(12px)';
+        c.style.opacity   = '0';
+        c.style.transform = 'translateY(10px)';
+        c.style.transition = 'none';
       });
-      outer.classList.add('open');
+      outer.style.transition = 'none';
+      outer.style.height = 'auto';
+      var target = outer.scrollHeight + 'px';
+      outer.style.height = '0';
+      outer.offsetHeight; // force reflow
+      outer.style.transition = 'height 0.48s ' + EASE + ', margin-top 0.48s ' + EASE;
+      outer.style.height = target;
+      outer.style.marginTop = '12px';
+      outer.addEventListener('transitionend', function onOpen(e) {
+        if (e.propertyName !== 'height') return;
+        outer.removeEventListener('transitionend', onOpen);
+        outer.style.overflow = 'visible';
+      });
+      // Stagger cards in, then clear inline styles so CSS hover works
       cards.forEach(function(c, i) {
         setTimeout(function() {
-          c.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
-          c.style.opacity = '1';
-          c.style.transform = 'translateY(0)';
-          setTimeout(function() {
-            c.style.transition = '';
-            c.style.opacity = '';
-            c.style.transform = '';
-          }, 420);
-        }, 60 + i * 70);
+          c.style.transition = 'opacity 0.36s ease, transform 0.36s ease';
+          c.style.opacity    = '1';
+          c.style.transform  = 'translateY(0)';
+        }, 60 + i * 60);
       });
+      setTimeout(function() {
+        cards.forEach(function(c) {
+          c.style.transition = '';
+          c.style.opacity    = '';
+          c.style.transform  = '';
+        });
+      }, 60 + (cards.length - 1) * 60 + 420);
     } else {
-      // Container height animates to 0 — no layout jump
-      outer.classList.remove('open');
+      // Fade cards out first, then collapse
+      cards.forEach(function(c) {
+        c.style.transition = 'opacity 0.18s ease';
+        c.style.opacity    = '0';
+      });
+      outer.style.overflow = 'hidden';
+      outer.style.height = outer.scrollHeight + 'px';
+      outer.offsetHeight;
+      outer.style.transition = 'height 0.42s ' + EASE + ', margin-top 0.42s ' + EASE;
+      outer.style.height    = '0';
+      outer.style.marginTop = '0';
+      outer.addEventListener('transitionend', function onDone(e) {
+        if (e.propertyName !== 'height') return;
+        outer.removeEventListener('transitionend', onDone);
+        cards.forEach(function(c) {
+          c.style.transition = '';
+          c.style.opacity    = '';
+          c.style.transform  = '';
+        });
+      });
     }
   });
+
+  // ── Intro animation ──────────────────────────────────────────────────────
+  (function() {
+    var seq = [
+      { sel: '.hero-badge',        anim: 'fadeUp'   },
+      { sel: '.hero-headline',     anim: 'fadeUp'   },
+      { sel: '.hero-sub',          anim: 'fadeUp'   },
+      { sel: '.hero .btn-primary', anim: 'fadeUp'   },
+      { sel: '.marquee-wrapper',   anim: 'fadeRight' },
+    ];
+    seq.forEach(function(item, i) {
+      var el = document.querySelector(item.sel);
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.animation = item.anim + ' 0.8s cubic-bezier(0.22,1,0.36,1) ' + (i * 90) + 'ms forwards';
+    });
+  })();
+
+  // ── Testimonial scroll animation ──────────────────────────────────────────
+  (function() {
+    // Bento layout: [left/right direction, row index] per card in DOM order
+    // Row 1: TJass(left,0) Jiedel(right,0)
+    // Row 2: ZackTTG(left,1) McDeezy(right,1)
+    // Row 3: Julien(left,2) SupEfron(right,2)
+    var cfg = [
+      { x: -28, row: 0 },
+      { x:  28, row: 0 },
+      { x: -28, row: 1 },
+      { x:  28, row: 1 },
+      { x: -28, row: 2 },
+      { x:  28, row: 2 },
+    ];
+
+    var cards = document.querySelectorAll('.testi-card');
+    var grid  = document.querySelector('.testi-grid');
+    if (!grid) return;
+
+    cards.forEach(function(card, i) {
+      var c = cfg[i] || { x: -28, row: i };
+      card.style.opacity   = '0';
+      card.style.transform = 'translateX(' + c.x + 'px)';
+      card.style.transition = 'opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)';
+    });
+
+    var fired = false;
+    var observer = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting || fired) return;
+      fired = true;
+      observer.disconnect();
+      cards.forEach(function(card, i) {
+        var c = cfg[i] || { x: -28, row: i };
+        setTimeout(function() {
+          card.style.opacity   = '1';
+          card.style.transform = 'translateX(0)';
+        }, c.row * 110);
+      });
+    }, { threshold: 0.15, rootMargin: '-60px 0px' });
+
+    observer.observe(grid);
+  })();
 
   // ── Lenis smooth scroll ───────────────────────────────────────────────────
   var lenis = new Lenis({
